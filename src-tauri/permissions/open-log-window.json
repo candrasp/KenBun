@@ -1,0 +1,13 @@
+{
+  "default": null,
+  "permission": [
+    {
+      "identifier": "allow-open-log-window",
+      "description": "Allows opening the log window",
+      "commands": {
+        "allow": ["open_log_window"],
+        "deny": []
+      }
+    }
+  ]
+}

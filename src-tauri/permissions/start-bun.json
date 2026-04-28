@@ -1,0 +1,13 @@
+{
+  "default": null,
+  "permission": [
+    {
+      "identifier": "start-bun",
+      "description": "Allows starting the bun process",
+      "commands": {
+        "allow": ["start_bun"],
+        "deny": []
+      }
+    }
+  ]
+}

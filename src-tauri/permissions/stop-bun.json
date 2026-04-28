@@ -1,0 +1,13 @@
+{
+  "default": null,
+  "permission": [
+    {
+      "identifier": "stop-bun",
+      "description": "Allows stopping the bun process",
+      "commands": {
+        "allow": ["stop_bun"],
+        "deny": []
+      }
+    }
+  ]
+}

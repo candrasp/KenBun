@@ -1,0 +1,13 @@
+{
+  "default": null,
+  "permission": [
+    {
+      "identifier": "allow-get-log-history",
+      "description": "Allows getting log history",
+      "commands": {
+        "allow": ["get_log_history"],
+        "deny": []
+      }
+    }
+  ]
+}

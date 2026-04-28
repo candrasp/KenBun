@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ken App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="card" id="mainView">
+      <div class="top-actions">
+        <button id="logBtn" class="icon-btn" title="Logs">
+          <span class="icon terminal-icon">>_</span>
+        </button>
+        <button id="settingsBtn" class="icon-btn" title="Pengaturan">
+          <span class="icon">⚙️</span>
+        </button>
+      </div>
+
+      <h1 class="app-title">KenBun</h1>
+      <p class="app-subtitle">Bun Engine Ready to fly.</p>
+
+      <button id="toggleBtn" class="btn btn-aktif">
+        <span class="btn-text">Start</span>
+      </button>
+
+      <p id="statusText" class="status-text">Siap dijalankan.</p>
+
+      <footer class="app-footer">
+        <div>Made with ❤️ by CandraSP</div>
+        <div class="license-text">Licensed under MIT</div>
+      </footer>
+    </div>
+
+    <!-- Halaman Pengaturan (Hidden by default) -->
+    <div class="card hidden" id="settingsView">
+      <div class="top-actions">
+        <button id="backBtn" class="icon-btn" title="Kembali">
+          <span class="icon">⬅️</span>
+        </button>
+      </div>
+
+      <h2 class="app-title">Settings</h2>
+
+      <div class="settings-group">
+        <label for="portInput">Port Server:</label>
+        <input type="number" id="portInput" value="3000" min="1" max="65535" />
+
+      </div>
+
+      <button id="saveBtn" class="btn btn-aktif">
+        <span class="btn-text">Simpan</span>
+      </button>
+
+      <footer class="app-footer">
+        <div>Made with ❤️ by CandraSP</div>
+        <div class="license-text">Licensed under MIT</div>
+      </footer>
+    </div>
+
+    <!-- Halaman Log (Hidden by default) -->
+    <div class="card hidden" id="logView">
+      <div class="top-actions">
+        <button id="expandLogBtn" class="icon-btn" title="Layar Penuh">
+          <span class="icon">⛶</span>
+        </button>
+        <button id="closeLogBtn" class="icon-btn" title="Kembali">
+          <span class="icon">⬅️</span>
+        </button>
+      </div>
+
+      <h2 class="app-title">Console Logs</h2>
+
+      <div class="log-container" id="logContent">
+        <!-- Log lines will appear here -->
+        <div class="log-line system">Menunggu proses dimulai...</div>
+      </div>
+
+      <button id="clearLogBtn" class="btn-text-only">Bersihkan Log</button>
+
+      <footer class="app-footer">
+        <div>Made with ❤️ by CandraSP</div>
+        <div class="license-text">Licensed under MIT</div>
+      </footer>
+    </div>
+
+  </div>
+
+  <script type="module" src="main.js"></script>
+</body>
+
+</html>

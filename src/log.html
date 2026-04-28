@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KenBun Terminal</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0c0c0c;
+      color: #00ff00;
+      font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #terminal {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    #terminal::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    #terminal::-webkit-scrollbar-thumb {
+      background: rgba(0, 255, 0, 0.2);
+      border-radius: 4px;
+    }
+
+    .log-line {
+      margin-bottom: 4px;
+    }
+
+    .system {
+      color: #00ffff;
+      font-style: italic;
+    }
+
+    .error {
+      color: #ff5555;
+      font-weight: bold;
+    }
+
+    .timestamp {
+      color: #888;
+      font-size: 0.8em;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="terminal">
+    <div class="log-line system">Terminal KenBun Siap...</div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const terminal = document.getElementById('terminal');
+
+      async function tryListen() {
+        if (!window.__TAURI__) {
+          setTimeout(tryListen, 100);
+          return;
+        }
+
+        const { listen } = window.__TAURI__.event;
+        const { invoke } = window.__TAURI__.core;
+
+        const addLog = (text) => {
+          const line = document.createElement('div');
+          line.className = 'log-line';
+
+          const time = new Date().toLocaleTimeString();
+          const timeSpan = document.createElement('span');
+          timeSpan.className = 'timestamp';
+          timeSpan.textContent = `[${time}]`;
+
+          line.appendChild(timeSpan);
+
+          if (text.startsWith('ERROR:')) {
+            line.classList.add('error');
+            line.appendChild(document.createTextNode(text.replace('ERROR:', '')));
+          } else if (text.startsWith('SYSTEM:')) {
+            line.classList.add('system');
+            line.appendChild(document.createTextNode(text.replace('SYSTEM:', '')));
+          } else {
+            line.appendChild(document.createTextNode(text));
+          }
+
+          terminal.appendChild(line);
+          terminal.scrollTop = terminal.scrollHeight;
+
+          if (terminal.children.length > 1000) {
+            terminal.removeChild(terminal.firstChild);
+          }
+        };
+
+        // Ambil riwayat log yang sudah ada
+        try {
+          const history = await invoke('get_log_history');
+          history.forEach(msg => addLog(msg));
+        } catch (e) {
+          addLog('SYSTEM:Gagal mengambil riwayat log');
+        }
+
+        // Dengarkan log baru
+        listen('log-event', (event) => {
+          addLog(event.payload);
+        });
+
+        // addLog('SYSTEM:Terminal terhubung...');
+      }
+
+      tryListen();
+    });
+  </script>
+</body>
+
+</html>
