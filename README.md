@@ -33,10 +33,6 @@ For KenBun to run perfectly, make sure your computer meets the following criteri
 - **Bun Runtime**: You must have **Bun** installed on your operating system. If it is not installed, KenBun will guide you the first time it is opened.
 - **Environment PATH**: The `bun` command must be registered in your PATH Environment Variables so it can be called by KenBun.
 
-### Hardware Requirements
-- **Storage**: Minimum 50 MB of free space for KenBun.
-- **Display**: Screen resolution of 1024x768 or higher for optimal interface display.
-
 ---
 
 ## 📖 How to Use
