@@ -1,0 +1,13 @@
+{
+  "default": null,
+  "permission": [
+    {
+      "identifier": "allow-get-bun-version",
+      "description": "Allows getting the installed bun version",
+      "commands": {
+        "allow": ["get_bun_version"],
+        "deny": []
+      }
+    }
+  ]
+}

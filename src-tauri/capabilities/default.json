@@ -4,7 +4,8 @@
   "description": "Default capability for the Ken app",
   "windows": [
     "main",
-    "log-window"
+    "log-window",
+    "guide-window"
   ],
   "permissions": [
     "core:default",
@@ -12,7 +13,15 @@
     "stop-bun",
     "allow-open-browser",
     "allow-open-log-window",
+    "allow-open-guide-window",
+    "allow-close-guide-window",
+    "allow-update-tray-menu",
     "allow-get-log-history",
+    "allow-get-project-path",
+    "allow-get-bun-version",
+    "allow-set-project-path",
+    "dialog:default",
+    "allow-verify-project",
     "core:tray:default",
     "core:menu:default",
     "opener:default"

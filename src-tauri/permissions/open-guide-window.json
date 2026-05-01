@@ -1,0 +1,13 @@
+{
+  "default": null,
+  "permission": [
+    {
+      "identifier": "allow-open-guide-window",
+      "description": "Allows opening the guide window",
+      "commands": {
+        "allow": ["open_guide_window"],
+        "deny": []
+      }
+    }
+  ]
+}

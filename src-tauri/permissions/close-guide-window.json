@@ -1,0 +1,13 @@
+{
+  "default": null,
+  "permission": [
+    {
+      "identifier": "allow-close-guide-window",
+      "description": "Allows closing the guide window",
+      "commands": {
+        "allow": ["close_guide_window"],
+        "deny": []
+      }
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 // Contoh script Bun yang akan dijalankan oleh Ken App
 // Ganti isi file ini dengan logika Anda sendiri
 
-const PORT = process.env.PORT || 3000;
+const PORT = parseInt(process.env.PORT) || 3000;
 
 const server = Bun.serve({
   port: PORT,

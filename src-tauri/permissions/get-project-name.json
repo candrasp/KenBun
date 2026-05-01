@@ -1,0 +1,13 @@
+{
+  "default": null,
+  "permission": [
+    {
+      "identifier": "allow-get-project-name",
+      "description": "Allows getting the project folder name",
+      "commands": {
+        "allow": ["get_project_name"],
+        "deny": []
+      }
+    }
+  ]
+}

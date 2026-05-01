@@ -1,6 +1,6 @@
 [package]
 name = "ken"
-version = "1.0.0"
+version = "1.1.0"
 license = "MIT"
 edition = "2021"
 
@@ -16,6 +16,8 @@ tray-icon = "0.22"
 muda = "0.17"
 tauri-plugin-dialog = "2"
 tauri-plugin-single-instance = "2"
+regex = "1"
+urlencoding = "2"
 
 # Windows: sembunyikan console window saat release
 [target.'cfg(windows)'.dependencies]

@@ -1,66 +1,57 @@
-# KenBun 🚀
-**Manajer Server Bun Portabel & Ringan untuk Windows**
+# 🥟 KenBun v1.1.0 - Professional Bun Server Manager
 
-KenBun adalah alat bantu (utility) untuk menjalankan script **Bun** di latar belakang tanpa harus membuka terminal. Sangat cocok bagi pengembang yang ingin kemudahan seperti Laragon namun khusus untuk ekosistem Bun.
+KenBun is a premium Desktop application (GUI) designed specifically to manage **Bun.sh** servers easily, quickly, and elegantly. Without needing to repeatedly type commands in the terminal, KenBun provides full control over your Bun projects through an advanced interface.
 
----
-
-<p align="center">
-  <img src="screenshot.png" alt="KenBun Screenshot" width="500">
-</p>
-
-## ✨ Fitur Unggulan
-*   **📍 Portabel:** Pindahkan file `.exe` ke folder project mana saja, ia akan otomatis mengenali project tersebut.
-*   **📥 Minimalkan ke Tray:** Menutup jendela tidak mematikan server. Aplikasi akan tetap aktif di pojok bawah layar (System Tray).
-*   **📟 Terminal Internal:** Lihat log/aktivitas server Anda langsung di dalam aplikasi tanpa terminal hitam.
-*   **🛡️ Anti-Bentrokan Port:** Otomatis membersihkan port yang macet sebelum server baru dijalankan.
-*   **⚙️ Pengaturan Fleksibel:** Simpan nomor port favorit Anda untuk setiap project.
+![KenBun Screenshot](./screenshot.png)
 
 ---
 
-## 🛠️ Langkah-Langkah Persiapan (Penting!)
+## 🚀 Key Features
 
-Sebelum menggunakan KenBun, pastikan dua hal ini sudah siap:
+KenBun is not just a typical server launcher. This application is specifically designed and focused on the following features to streamline your workflow:
 
-### 1. Instal Bun
-Pastikan komputer Anda sudah memiliki **Bun**. Jika belum, instal via PowerShell:
-```powershell
-powershell -c "irm bun.sh/install.ps1 | iex"
-```
+### 1. Smart Project Management
+- **Quick Switch Workspace**: Switch between project folders with just a few clicks, without needing to close the application.
+- **Auto-Project Detection**: KenBun automatically detects if the folder you selected is a valid Bun project based on the files inside it.
 
-### 2. Siapkan file `index.js`
-KenBun akan mencari file bernama `index.js` di foldernya. Agar fitur **Custom Port** berfungsi, kode Anda harus menggunakan format ini:
+### 2. Server Stability & Security
+- **Port Conflict Detection**: KenBun proactively detects if the port you want to use is currently being used by another application. It will prompt you to change the port to prevent network conflict errors.
+- **Auto-Restart on Crash**: Did your server suddenly crash due to a bug in the code? Don't worry, KenBun will immediately restart it automatically.
+- **Exponential Back-off**: A smart restart strategy that prevents your system from becoming overloaded when the server crashes repeatedly in quick succession.
 
-```javascript
-// WAJIB: Membaca Port dari sistem
-const PORT = process.env.PORT || 3000;
-
-const server = Bun.serve({
-  port: PORT, // Gunakan variabel PORT di sini
-  fetch(req) {
-    return new Response("Halo dari KenBun!");
-  },
-});
-
-console.log(`Server aktif di: http://localhost:${PORT}`);
-```
+### 3. Integrated Console
+- **Real-time Log Output**: Monitor all server logs (stdout/stderr) directly from the KenBun interface in real-time, without needing to open an external terminal.
 
 ---
 
-## 🚀 Cara Menggunakan KenBun
+## 🛠️ System Requirements
 
-1.  **Taruh & Buka:** Masukkan file `KenBun.exe` ke folder project Anda, lalu klik dua kali untuk membukanya.
-2.  **Atur Port (Opsional):** Jika ingin menggunakan port selain 3000, klik ikon **Gear (⚙️)** di pojok kanan atas, masukkan angka port, dan klik **Simpan**.
-3.  **Klik Start:** Klik tombol **Start** di halaman utama. 
-    *   *KenBun akan otomatis membuka browser untuk Anda.*
-4.  **Pantau Aktivitas:** Klik ikon **Terminal (>_)** untuk melihat log server Anda secara real-time.
-5.  **Sembunyikan:** Klik tombol **X** pada jendela aplikasi jika ingin menyembunyikannya ke System Tray (dekat jam/hidden icon).
-6.  **Matikan:** Klik tombol **Stop** di aplikasi, atau klik kanan ikon KenBun di System Tray lalu pilih **Keluar**.
+For KenBun to run perfectly, make sure your computer meets the following criteria:
+
+### Main Requirements
+- **Operating System**: Windows 10 or Windows 11 (64-bit).
+- **Bun Runtime**: You must have **Bun** installed on your operating system. If it is not installed, KenBun will guide you the first time it is opened.
+- **Environment PATH**: The `bun` command must be registered in your PATH Environment Variables so it can be called by KenBun.
+
+### Hardware Requirements
+- **Storage**: Minimum 50 MB of free space for KenBun.
+- **Display**: Screen resolution of 1024x768 or higher for optimal interface display.
+
+---
+
+## 📖 How to Use
+
+Using KenBun is very easy, just follow the steps below:
+
+1. **Open Application**: Run the KenBun application you have installed/downloaded.
+2. **Select Project Folder**: Click the **"Select"** button at the top to choose your Bun project directory folder.
+3. **Server Configuration**: 
+   - Specify the **Port** you want to use (e.g., `3000`).
+   - Enter the name of the **Main File** to be executed (e.g., `index.js` or `server.ts`).
+4. **Start Server**: Click the large **"START SERVER"** button. The Bun server will immediately run in the background!
+5. **Monitor Logs**: You can directly view all interactions, errors, or server status in the **Console Log** section below it.
+6. **Stop**: To shut down the server, simply click the **"STOP SERVER"** button.
 
 ---
 
-## 🧩 Teknologi
-Dibangun dengan **Tauri v2** menggunakan bahasa pemrograman **Rust** dan **JavaScript** untuk memastikan performa yang sangat cepat dan penggunaan RAM yang minimal (~40MB).
-
----
-Dibuat dengan ❤️ untuk memudahkan pengembang Bun di Windows.
+Developed with ❤️ for the Bun community by **CandraSP**

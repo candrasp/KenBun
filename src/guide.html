@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KenBun — Port Configuration Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0f1e;
+      --surface: #111827;
+      --border: rgba(99, 102, 241, 0.2);
+      --accent: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.3);
+      --success: #10b981;
+      --warning: #f59e0b;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --code-bg: #0d1117;
+      --red: #ef4444;
+      --green: #10b981;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 28px;
+      line-height: 1.6;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .header-text h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .header-text p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .detected-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #f59e0b;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .explanation {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 22px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .explanation strong { color: var(--text); }
+
+    .steps { display: flex; flex-direction: column; gap: 18px; }
+
+    .step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      background: rgba(99, 102, 241, 0.05);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .step-num {
+      width: 26px;
+      height: 26px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .step-header h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .step-body { padding: 16px 18px; }
+
+    .step-body p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .code-block {
+      background: var(--code-bg);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.7;
+      position: relative;
+      overflow-x: auto;
+    }
+
+    .code-block .comment { color: #6b7280; }
+    .code-block .key { color: #93c5fd; }
+    .code-block .value { color: #86efac; }
+    .code-block .string { color: #fca5a5; }
+    .code-block .diff-removed { color: var(--red); text-decoration: line-through; opacity: 0.6; }
+    .code-block .diff-added { color: var(--green); }
+    .code-block .neutral { color: var(--text-muted); }
+
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-muted);
+      border-radius: 6px;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .copy-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+
+    .copy-btn svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+
+    .label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .mb-12 { margin-bottom: 12px; }
+
+    .info-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      color: var(--success);
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-top: 10px;
+    }
+
+    .footer {
+      margin-top: 24px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 9px 22px;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.06);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 0 18px var(--accent-glow);
+    }
+
+    .btn-primary:hover { background: #5254f0; transform: translateY(-1px); }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-icon">⚠️</div>
+    <div class="header-text">
+      <h1>Port Configuration Required</h1>
+      <p>Your project uses a framework that needs a small adjustment to work with KenBun.</p>
+    </div>
+  </div>
+
+  <div class="detected-badge" id="detectedBadge">
+    🔍 Detected: <span id="frameworkName">—</span>
+  </div>
+
+  <div class="explanation">
+    <strong>Why is this needed?</strong><br>
+    KenBun manages your server's port from its Settings panel. However, <strong id="frameworkName2">this framework</strong> uses
+    <code>app.listen(port)</code> internally (not <code>Bun.serve</code>), so KenBun's automatic port injection
+    cannot override a hardcoded value. The fix is simple: read the port from an environment variable.
+  </div>
+
+  <div class="steps">
+    <!-- Step 1 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <h3>Create a <code>.env</code> file in your project root</h3>
+      </div>
+      <div class="step-body">
+        <p>Create a file named <strong>.env</strong> in the root folder of your project with this content:</p>
+        <div class="code-block">
+          <span class="key">PORT</span>=<span class="value" id="portValue">3000</span>
+          <button class="copy-btn" onclick="copyText('PORT=' + document.getElementById('portValue').textContent, this)" title="Copy .env code">
+            <svg viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3v14h2V3h12V1zm3 4H8C6.9 4 6 4.9 6 6v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H8V6h11v14z"/></svg>
+          </button>
+        </div>
+        <div class="info-pill">✅ Bun automatically loads .env — no extra library needed!</div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <h3>Update your script to read the port from environment</h3>
+      </div>
+      <div class="step-body" id="codeExamples">
+        <!-- Dynamically filled by JS -->
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button class="btn btn-secondary" id="closeBtn">Close</button>
+    <button class="btn btn-primary" id="retryBtn">✓ I've Updated It — Retry</button>
+  </div>
+
+  <script>
+    const examples = {
+      'Express.js': {
+        before: `app.listen(3000, () => {\n  console.log('Server running on port 3000');\n});`,
+        after:  `const PORT = process.env.PORT || 3000;\napp.listen(PORT, () => {\n  console.log(\`Server running on port \${PORT}\`);\n});`,
+      },
+      'Fastify': {
+        before: `await fastify.listen({ port: 3000 });`,
+        after:  `const PORT = parseInt(process.env.PORT) || 3000;\nawait fastify.listen({ port: PORT });`,
+      },
+      'Koa': {
+        before: `app.listen(3000);`,
+        after:  `const PORT = process.env.PORT || 3000;\napp.listen(PORT);`,
+      },
+      'NestJS': {
+        before: `await app.listen(3000);`,
+        after:  `await app.listen(process.env.PORT || 3000);`,
+      },
+      'AdonisJS': {
+        before: `server.listen(3000);`,
+        after:  `const PORT = process.env.PORT || 3000;\nserver.listen(PORT);`,
+      },
+      'Hapi.js': {
+        before: `const server = Hapi.server({ port: 3000, host: 'localhost' });`,
+        after:  `const PORT = process.env.PORT || 3000;\nconst server = Hapi.server({ port: PORT, host: 'localhost' });`,
+      },
+      'Sails.js': {
+        before: `sails.lift({ port: 3000 }, function(err) { ... });`,
+        after:  `const PORT = process.env.PORT || 3000;\nsails.lift({ port: PORT }, function(err) { ... });`,
+      },
+      'Feathers.js': {
+        before: `app.listen(3000);`,
+        after:  `const PORT = process.env.PORT || 3000;\napp.listen(PORT);`,
+      },
+      'LoopBack': {
+        before: `app.listen(3000);`,
+        after:  `const PORT = process.env.PORT || 3000;\napp.listen(PORT);`,
+      },
+      'Total.js': {
+        before: `require('total.js').http('release', { port: 3000 });`,
+        after:  `const PORT = process.env.PORT || 3000;\nrequire('total.js').http('release', { port: PORT });`,
+      },
+      'Derby.js': {
+        before: `app.listen(3000);`,
+        after:  `const PORT = process.env.PORT || 3000;\napp.listen(PORT);`,
+      },
+      'Meteor.js': {
+        before: `// Meteor starts via CLI, but if programmed:\nprocess.env.PORT = 3000;`,
+        after:  `// Meteor automatically uses process.env.PORT natively!\n// Just create the .env file above.`,
+      },
+      'Socket.io': {
+        before: `io.listen(3000);`,
+        after:  `const PORT = process.env.PORT || 3000;\nio.listen(PORT);`,
+      },
+      'ActionHero': {
+        before: `// In config/web.js\nport: 3000`,
+        after:  `// In config/web.js\nport: process.env.PORT || 3000`,
+      },
+      'Ts.ED': {
+        before: `@ServerSettings({\n  port: 3000\n})`,
+        after:  `@ServerSettings({\n  port: process.env.PORT || 3000\n})`,
+      },
+      'Restify': {
+        before: `server.listen(3000, function() { ... });`,
+        after:  `const PORT = process.env.PORT || 3000;\nserver.listen(PORT, function() { ... });`,
+      },
+      'default': {
+        before: `server.listen(3000);`,
+        after:  `const PORT = process.env.PORT || 3000;\nserver.listen(PORT);`,
+      }
+    };
+
+    // Read data from localStorage
+    function render() {
+      const frameworksStr = localStorage.getItem('ken_guide_frameworks') || 'Unknown Framework';
+      const frameworks = frameworksStr.split(',');
+      const port = localStorage.getItem('ken_guide_port') || '3000';
+
+      document.getElementById('frameworkName').textContent = frameworks.join(', ');
+      document.getElementById('frameworkName2').textContent = frameworks.join(' / ');
+      document.getElementById('portValue').textContent = port;
+
+      const container = document.getElementById('codeExamples');
+      container.innerHTML = ''; // Clear previous
+
+      frameworks.forEach(fw => {
+        const ex = examples[fw] || examples['default'];
+        container.innerHTML += `
+          <div class="mb-12">
+            <div class="label">${fw} - Before (hardcoded)</div>
+            <div class="code-block"><span class="diff-removed">${escapeHtml(ex.before)}</span></div>
+          </div>
+          <div class="mb-12">
+            <div class="label">${fw} - After (KenBun compatible ✅)</div>
+            <div class="code-block">
+              <span class="diff-added">${escapeHtml(ex.after.replace('3000', port))}</span>
+              <button class="copy-btn" onclick="copyText(this.previousElementSibling.textContent, this)" title="Copy script">
+                <svg viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3v14h2V3h12V1zm3 4H8C6.9 4 6 4.9 6 6v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H8V6h11v14z"/></svg>
+              </button>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    render();
+
+    // Listen for updates if window is already open
+    if (window.__TAURI__) {
+      window.__TAURI__.event.listen('guide-update', render);
+    }
+
+    if (window.__TAURI__) {
+      window.__TAURI__.event.listen('guide-close', () => {
+        window.__TAURI__.core.invoke('close_guide_window');
+      });
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/`/g,'&#96;').replace(/\n/g,'<br>');
+    }
+
+    function copyText(text, btn) {
+      navigator.clipboard.writeText(text).then(() => {
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = '✓';
+        btn.style.color = 'var(--green)';
+        setTimeout(() => {
+          btn.innerHTML = originalHTML;
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+
+    // Close window
+    document.getElementById('closeBtn').addEventListener('click', () => {
+      if (window.__TAURI__) {
+        window.__TAURI__.core.invoke('close_guide_window');
+      } else {
+        window.close();
+      }
+    });
+
+    // Retry: emit event back to main window without closing immediately
+    document.getElementById('retryBtn').addEventListener('click', () => {
+      const btn = document.getElementById('retryBtn');
+      btn.textContent = "Checking...";
+      btn.disabled = true;
+      if (window.__TAURI__) {
+        window.__TAURI__.event.emit('guide-retry', {});
+      }
+    });
+
+    if (window.__TAURI__) {
+      window.__TAURI__.event.listen('guide-update', () => {
+        // Reset button if it fails again
+        const btn = document.getElementById('retryBtn');
+        btn.textContent = "✓ I've Updated It — Retry";
+        btn.disabled = false;
+        render();
+
+        // Tampilkan peringatan bahwa script belum berubah
+        const toast = document.createElement('div');
+        toast.textContent = "⚠️ Script has not been updated! Make sure the file is saved (Ctrl+S).";
+        toast.style.cssText = "position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #ef4444; color: white; padding: 10px 20px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: opacity 0.3s;";
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          setTimeout(() => toast.remove(), 300);
+        }, 5000);
+      });
+
+    }
+  </script>
+</body>
+</html>

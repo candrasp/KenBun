@@ -1,0 +1,13 @@
+{
+  "default": null,
+  "permission": [
+    {
+      "identifier": "allow-verify-project",
+      "description": "Allows verifying project structure and script existence",
+      "commands": {
+        "allow": ["verify_project"],
+        "deny": []
+      }
+    }
+  ]
+}

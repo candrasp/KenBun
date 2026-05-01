@@ -1,0 +1,13 @@
+{
+  "default": null,
+  "permission": [
+    {
+      "identifier": "allow-update-tray-menu",
+      "description": "Allows updating the tray menu dynamically",
+      "commands": {
+        "allow": ["update_tray_menu"],
+        "deny": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "default": null,
+  "permission": [
+    {
+      "identifier": "allow-set-project-path",
+      "description": "Allows updating the current project path",
+      "commands": {
+        "allow": ["set_project_path"],
+        "deny": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "default": null,
+  "permission": [
+    {
+      "identifier": "allow-get-project-path",
+      "description": "Allows getting the full project folder path",
+      "commands": {
+        "allow": ["get_project_path"],
+        "deny": []
+      }
+    }
+  ]
+}
